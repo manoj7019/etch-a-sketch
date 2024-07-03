@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+</head>
+<body onload="createUserSquares()">
+    <div class="wholePage">
+        <div>
+            <label for="squaresNum">Input your number :</label>
+            <input type="text" name="" value='16' id="numOfSquares">
+            <button onclick="createUserSquares()" id="update">Create</button>
+        </div>
+        <br>
+        <div class="colorBox">
+            <label for="colorSelect">Pick your color : </label>
+            <input type="color" name="" id="colorSelect">
+        </div>
+        <p id="totalSquares"></p>
+        <div id="container"></div>
+    </div>
+</body>
+<script>
+
+        let squaresNum = document.getElementById('numOfSquares');
+        let defaultSquares = squaresNum.defaultValue;
+        let totalSquares = document.getElementById('totalSquares');
+        totalSquares.textContent = `${defaultSquares} x ${defaultSquares}`;
+        
+        
+       
+        
+        function createUserSquares() {
+            let userSquares = squaresNum.value;
+            totalSquares.textContent = `${userSquares} x ${userSquares}`;
+            
+            const container = document.querySelector('#container');
+            container.style.width = '500px';
+            container.style.height = '500px';
+            
+            for (let i=1; i<=userSquares; i++) {
+                const row = document.createElement('div');
+                row.setAttribute('class', 'squareRow')
+                container.appendChild(row);
+                
+                for(let j=1; j<=userSquares; j++) {
+                    const square = document.createElement('div');
+                    
+                    const squareWidth = ((500 - (userSquares*2))/userSquares);
+                    const squareHeight = ((500 - (userSquares*2))/userSquares);
+                    
+                    square.style.width = squareWidth + 'px'
+                    square.style.height = squareHeight + 'px'
+                
+
+                    square.setAttribute('id', 'squareBtn')
+                    square.addEventListener('mouseover', ()=> {
+                        let selectColor = document.getElementById('colorSelect');
+                        let newColor = selectColor.value;
+                        console.log(newColor);
+                        square.style.backgroundColor = newColor;
+                    })
+                    row.appendChild(square);
+                }
+
+                const createBtn = document.querySelector('#update');
+                createBtn.addEventListener('click', ()=> {
+                    row.remove()
+                })
+            }
+
+        }
+
+    </script>
+</html>
